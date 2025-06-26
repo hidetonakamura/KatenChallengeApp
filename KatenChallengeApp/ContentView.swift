@@ -1,24 +1,32 @@
-//
-//  ContentView.swift
-//  KatenChallengeApp
-//
-//  Created by 仲村日出人 on 2025/05/15.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+        TabView {
+            FormView()
+                .tabItem {
+                    Label("記録", systemImage: "pencil")
+                }
 
-#Preview {
-    ContentView()
+            DailyEntryListView()
+                .tabItem {
+                    Label("一覧", systemImage: "list.bullet")
+                }
+
+            GoalSummaryView()
+                .tabItem {
+                    Label("目標", systemImage: "target")
+                }
+
+            AchievementChartView()
+                .tabItem {
+                    Label("達成率", systemImage: "chart.bar.fill")
+                }
+
+            GoalHistoryView() // ← ここ！
+                .tabItem {
+                    Label("履歴", systemImage: "clock")
+                }
+        }
+    }
 }

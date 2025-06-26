@@ -1,18 +1,46 @@
-//
-//  DailyEntryRowView.swift
-//  KatenChallengeApp
-//
-//  Created by 仲村日出人 on 2025/05/16.
-//
-
 import SwiftUI
 
 struct DailyEntryRowView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @Binding var entry: DailyEntry
+    let index: Int
+    let onTap: () -> Void
 
-#Preview {
-    DailyEntryRowView()
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("🗓 \(formattedDate(entry.date))")
+                .font(.caption)
+                .foregroundColor(.gray)
+            Text("🌟 \(entry.didWell)")
+                .font(.headline)
+            if !entry.effortNote.isEmpty {
+                Text("💪 \(entry.effortNote)")
+                    .font(.subheadline)
+            }
+            Text("🚀 明日: \(entry.tomorrowGoal)")
+                .font(.subheadline)
+            HStack {
+                ForEach(0..<entry.stars, id: \.self) { _ in
+                    Image(systemName: "star.fill")
+                        .foregroundColor(.yellow)
+                }
+            }
+            if entry.isEdited {
+                Text("✏️ 修正済み")
+                    .font(.caption)
+                    .foregroundColor(.blue)
+            }
+        }
+        .padding(.vertical, 4)
+        .contentShape(Rectangle()) // タップ範囲拡張
+        .onTapGesture {
+            onTap()
+        }
+    }
+
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.locale = Locale(identifier: "ja_JP")
+        return formatter.string(from: date)
+    }
 }
