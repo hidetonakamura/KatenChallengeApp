@@ -23,7 +23,7 @@ struct ContentView: View {
                     Label("達成率", systemImage: "chart.bar.fill")
                 }
 
-            GoalHistoryView() // ← ここ！
+            GoalHistoryView()
                 .tabItem {
                     Label("履歴", systemImage: "clock")
                 }
